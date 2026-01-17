@@ -1,3 +1,7 @@
+using CrudApi.Api.Infrastructure.ServiceRegistrations;
+using CrudApi.Application.Interfaces;
+using CrudApi.Application.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddMongo(builder.Configuration.GetConnectionString("MongoDb"),"CrudApiDb");
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

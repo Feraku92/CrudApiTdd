@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CrudApi.Api\CrudApi.Api.csproj" />
+    <ProjectReference Include="..\CrudApi.Application\CrudApi.Application.csproj" />
+    <ProjectReference Include="..\CrudApi.Domain\CrudApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

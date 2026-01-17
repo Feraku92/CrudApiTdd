@@ -1,0 +1,13 @@
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\bin\Debug\net8.0\CrudApi.Domain.deps.json
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\bin\Debug\net8.0\CrudApi.Domain.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\bin\Debug\net8.0\CrudApi.Domain.pdb
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.AssemblyInfoInputs.cache
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.AssemblyInfo.cs
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.sourcelink.json
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\refint\CrudApi.Domain.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.pdb
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\ref\CrudApi.Domain.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.Domain\obj\Debug\net8.0\CrudApi.Domain.csproj.AssemblyReference.cache
