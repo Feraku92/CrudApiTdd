@@ -4,7 +4,7 @@ namespace CrudApi.Application.Interfaces
 {
     public interface IUserRepository
     {
-        User GetByEmail(string email);
+        User GetByUserName(string userName);
         void Add(User user);
     }
 }

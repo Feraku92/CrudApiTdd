@@ -17,3 +17,13 @@ dist/
 # OS files
 .DS_Store
 Thumbs.db
+
+
+# Global logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# VS Code global
+.vscode/

@@ -1,0 +1,15 @@
+<h2>Login</h2>
+
+<input type="text" [(ngModel)]="userName" placeholder="UserName" />
+<br />
+
+<input type="password" [(ngModel)]="password" placeholder="Password" />
+<br />
+
+<button (click)="login()">Login</button>
+
+<p *ngIf="error" style="color:red">{{ error }}</p>
+
+<p>
+    Don't have an account? <button (click)="register()">Register</button>
+</p>

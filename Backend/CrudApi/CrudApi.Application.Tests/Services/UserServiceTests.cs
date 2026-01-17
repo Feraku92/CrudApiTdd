@@ -20,7 +20,7 @@ namespace CrudApi.Application.Tests.Services
         [Fact]
         public void RegisterUser_ShouldAddUser_WhenEmailIsUnique()
         {
-            _userRepositoryMock.Setup(r => r.GetByEmail("test@example.com")).Returns((User)null);
+            _userRepositoryMock.Setup(r => r.GetByUserName("test@example.com")).Returns((User)null);
 
             var result = _userService.RegisterUser("testuser", "test@example.com", "password123");
 
@@ -29,22 +29,22 @@ namespace CrudApi.Application.Tests.Services
         }
 
         [Fact]
-        public void RegisterUser_ShouldThrow_WhenEmailExists()
+        public void RegisterUser_ShouldThrow_WhenUserNameExists()
         {
-            _userRepositoryMock.Setup(r => r.GetByEmail("test@example.com"))
-                .Returns(new User("existing", "test@example.com", "pass"));
+            _userRepositoryMock.Setup(r => r.GetByUserName("testuser"))
+                .Returns(new User("existing", "testuser", "pass"));
 
             Assert.Throws<InvalidOperationException>(() =>
-                _userService.RegisterUser("newuser", "test@example.com", "password123"));
+                _userService.RegisterUser("testuser", "test@example.com", "password123"));
         }
 
         [Fact]
         public void AuthenticateUser_ShouldReturnUser_WhenCredentialsAreValid()
         {
             var user = new User("testuser", "test@example.com", "password123");
-            _userRepositoryMock.Setup(r => r.GetByEmail("test@example.com")).Returns(user);
+            _userRepositoryMock.Setup(r => r.GetByUserName("testuser")).Returns(user);
 
-            var result = _userService.AuthenticateUser("test@example.com", "password123");
+            var result = _userService.AuthenticateUser("testuser", "password123");
 
             Assert.Equal("testuser", result.UserName);
         }
@@ -52,10 +52,11 @@ namespace CrudApi.Application.Tests.Services
         [Fact]
         public void AuthenticateUser_ShouldThrow_WhenCredentialsInvalid()
         {
-            _userRepositoryMock.Setup(r => r.GetByEmail("test@example.com")).Returns((User)null);
+            var user = new User("testuser", "test@example.com", "fakepassword");
+            _userRepositoryMock.Setup(r => r.GetByUserName("testuser")).Returns(user);
 
             Assert.Throws<UnauthorizedAccessException>(() =>
-                _userService.AuthenticateUser("test@example.com", "wrongpassword"));
+                _userService.AuthenticateUser("testuser", "wrongpassword"));
         }
     }
 }
