@@ -1,0 +1,12 @@
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\bin\Debug\net8.0\CrudApi.IntegrationTests.deps.json
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\bin\Debug\net8.0\CrudApi.IntegrationTests.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\bin\Debug\net8.0\CrudApi.IntegrationTests.pdb
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.AssemblyInfoInputs.cache
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.AssemblyInfo.cs
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.csproj.CoreCompileInputs.cache
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.sourcelink.json
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\refint\CrudApi.IntegrationTests.dll
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\CrudApi.IntegrationTests.pdb
+C:\Users\Ferna\Desktop\Crud.API.TDD\Backend\CrudApi\CrudApi.IntegrationTests\obj\Debug\net8.0\ref\CrudApi.IntegrationTests.dll
