@@ -3,6 +3,8 @@ import { PokemonService } from '../../services/pokemon.service';
 import { Pokemon } from '../../models/pokemon.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../auth/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-record',
@@ -33,8 +35,13 @@ export class RecordComponent implements OnInit {
   createMessage: string = '';
   updateMessage: string = '';
   deleteMessage: string = '';
-  
-  constructor(private pokemonService: PokemonService, private cd: ChangeDetectorRef) {}
+
+    constructor(
+    private pokemonService: PokemonService, 
+    private cd: ChangeDetectorRef,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadAllPokemons();
@@ -196,5 +203,10 @@ export class RecordComponent implements OnInit {
       },
       error: _ => this.deleteMessage = 'Error deleting Pokémon'
     });
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

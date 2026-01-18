@@ -22,10 +22,15 @@ export class LoginComponent {
   ) {}
 
   login() {
+    this.error = '';
     this.authService.login(this.userName, this.password)
       .subscribe({
-        next: () => this.router.navigate(['/records']),
-        error: () => alert('Invalid credentials')
+        next: () => {
+          const redrectUrl = sessionStorage.getItem('redirectUrl') || '/records';
+          sessionStorage.removeItem('redirectUrl');
+          this.router.navigate(['/records']);
+        },
+        error: (err) => {this.error = 'Invalid credentials. Please try again.';}
       });
   }
 
