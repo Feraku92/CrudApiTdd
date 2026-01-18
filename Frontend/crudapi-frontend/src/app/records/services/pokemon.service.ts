@@ -12,18 +12,8 @@ export class PokemonService {
   
   constructor(private http: HttpClient) {}
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-  private getAuthHeaders(): Record<string, string> {
-  const token = this.getToken();
-    return { Authorization: token ? `Bearer ${token}` : '' };
-  }
-
   getAllPokemon(): Observable<Pokemon[]> {
-    return this.http.get<Pokemon[]>(`${this.apiPokemonUrl}/getall`, {
-      headers: this.getAuthHeaders(),
-    });
+    return this.http.get<Pokemon[]>(`${this.apiPokemonUrl}/getall`);
   }
 
   searchPokemon(name?: string, number?: number): Observable<Pokemon | null> {
@@ -31,32 +21,19 @@ export class PokemonService {
     if (name) params = params.set('name', name);
     if (number != null) params = params.set('number', number.toString());
 
-    return this.http.get<Pokemon | null>(`${this.apiPokemonUrl}/search`, {
-      headers: this.getAuthHeaders(),
-      params,
-    });
+    return this.http.get<Pokemon | null>(`${this.apiPokemonUrl}/search`, { params });
   }
 
   createPokemon(pokedexId: number, name: string, type: string): Observable<Pokemon> {
-    return this.http.post<Pokemon>(
-      `${this.apiPokemonUrl}/create`,
-      { pokedexId, name, type },
-      { headers: this.getAuthHeaders() }
+    return this.http.post<Pokemon>(`${this.apiPokemonUrl}/create`, { pokedexId, name, type }
     );
   }
 
   updatePokemon(id: string, updatedPokemon: Pokemon): Observable<Pokemon> {
-    return this.http.put<Pokemon>(
-      `${this.apiPokemonUrl}/${id}`,
-      updatedPokemon,
-      { headers: this.getAuthHeaders() }
-    );
+    return this.http.put<Pokemon>(`${this.apiPokemonUrl}/${id}`, updatedPokemon);
   }
 
   deletePokemon(id: string) {
-    return this.http.delete<void>(
-      `${this.apiPokemonUrl}/${id}`,
-      { headers: this.getAuthHeaders() }
-    );
+    return this.http.delete<void>(`${this.apiPokemonUrl}/${id}`);
   }
 }

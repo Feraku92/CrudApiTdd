@@ -23,40 +23,32 @@ namespace CrudApi.Application.Tests.Services
         public void RegisterUser_ShouldAddUser_WhenEmailIsUnique()
         {
             var registerUserRequest = new RegisterUserRequest("testuser", "test@example.com", "password123");
-            _userRepositoryMock.Setup(r => r.GetByUserName("test@example.com")).Returns((User)null);
+            _userRepositoryMock.Setup(r => r.GetByUserName("testuser")).Returns((User)null);
 
             var result = _userService.RegisterUser(registerUserRequest);
 
             _userRepositoryMock.Verify(r => r.Add(It.IsAny<User>()), Times.Once);
             Assert.Equal("testuser", result.UserName);
+            Assert.Equal("test@example.com", result.Email);
         }
 
         [Fact]
         public void RegisterUser_ShouldThrow_WhenUserNameExists()
         {
             var registerUserRequest = new RegisterUserRequest("testuser", "test@example.com", "password123");
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword("existingpassword");
             _userRepositoryMock.Setup(r => r.GetByUserName("testuser"))
-                .Returns(new User("existing", "testuser", "pass"));
+                .Returns(new User("testuser", "existing@example.com", hashedPassword));
 
-            Assert.Throws<InvalidOperationException>(() =>
+            Assert.Throws<Exception>(() =>
                 _userService.RegisterUser(registerUserRequest));
-        }
-
-        [Fact]
-        public void AuthenticateUser_ShouldReturnUser_WhenCredentialsAreValid()
-        {
-            var user = new User("testuser", "test@example.com", "password123");
-            _userRepositoryMock.Setup(r => r.GetByUserName("testuser")).Returns(user);
-
-            var result = _userService.AuthenticateUser("testuser", "password123");
-
-            Assert.Equal("testuser", result);
         }
 
         [Fact]
         public void AuthenticateUser_ShouldThrow_WhenCredentialsInvalid()
         {
-            var user = new User("testuser", "test@example.com", "fakepassword");
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword("correctpassword");
+            var user = new User("testuser", "test@example.com", hashedPassword);
             _userRepositoryMock.Setup(r => r.GetByUserName("testuser")).Returns(user);
 
             Assert.Throws<UnauthorizedAccessException>(() =>

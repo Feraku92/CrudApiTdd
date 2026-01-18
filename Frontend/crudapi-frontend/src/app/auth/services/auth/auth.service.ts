@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams  } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { max, Observable, tap } from 'rxjs';
 import sha256 from 'crypto-js/sha256';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class AuthService {
       { userName, password: hashedPassword }
     ).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
+        this.saveToken(response.token);
       })
     );
   }
@@ -31,14 +31,30 @@ export class AuthService {
 
   saveToken(token: string): void {
     localStorage.setItem('token', token);
+    localStorage.setItem('tokenTimestamp', Date.now().toString());
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    const timestamp = localStorage.getItem('tokenTimestamp');
+
+    if (token && timestamp){
+      const tokenAge = Date.now() - parseInt(timestamp);
+      const maxAge = 24 * 60 * 60 * 1000;
+
+      if (tokenAge>maxAge){
+        this.logout();
+        return null;
+      }
+
+      return token;
+    }
+    return null;
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenTimestamp');
   }
 
   isAuthenticated(): boolean {
