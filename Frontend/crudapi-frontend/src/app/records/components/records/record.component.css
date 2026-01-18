@@ -1,0 +1,73 @@
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* TABLA */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+section form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+section input[type="text"],
+section input[type="number"] {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+  flex: 1 1 150px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+div[class$="Message"], .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+  section form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  table th, table td {
+    font-size: 0.9rem;
+    padding: 6px;
+  }
+}

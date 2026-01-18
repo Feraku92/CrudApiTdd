@@ -1,4 +1,5 @@
-﻿using CrudApi.Application.Interfaces;
+﻿using CrudApi.Application.Dtos;
+using CrudApi.Application.Interfaces;
 using CrudApi.Application.Services;
 using CrudApi.Domain.Entities;
 using Moq;
@@ -10,19 +11,21 @@ namespace CrudApi.Application.Tests.Services
     {
         private readonly Mock<IUserRepository> _userRepositoryMock;
         private readonly UserService _userService;
+        private readonly string _jwtSecret = "clave_super_segura_para_test";
 
         public UserServiceTests()
         {
             _userRepositoryMock = new Mock<IUserRepository>();
-            _userService = new UserService(_userRepositoryMock.Object);
+            _userService = new UserService(_userRepositoryMock.Object, _jwtSecret);
         }
 
         [Fact]
         public void RegisterUser_ShouldAddUser_WhenEmailIsUnique()
         {
+            var registerUserRequest = new RegisterUserRequest("testuser", "test@example.com", "password123");
             _userRepositoryMock.Setup(r => r.GetByUserName("test@example.com")).Returns((User)null);
 
-            var result = _userService.RegisterUser("testuser", "test@example.com", "password123");
+            var result = _userService.RegisterUser(registerUserRequest);
 
             _userRepositoryMock.Verify(r => r.Add(It.IsAny<User>()), Times.Once);
             Assert.Equal("testuser", result.UserName);
@@ -31,11 +34,12 @@ namespace CrudApi.Application.Tests.Services
         [Fact]
         public void RegisterUser_ShouldThrow_WhenUserNameExists()
         {
+            var registerUserRequest = new RegisterUserRequest("testuser", "test@example.com", "password123");
             _userRepositoryMock.Setup(r => r.GetByUserName("testuser"))
                 .Returns(new User("existing", "testuser", "pass"));
 
             Assert.Throws<InvalidOperationException>(() =>
-                _userService.RegisterUser("testuser", "test@example.com", "password123"));
+                _userService.RegisterUser(registerUserRequest));
         }
 
         [Fact]
@@ -46,7 +50,7 @@ namespace CrudApi.Application.Tests.Services
 
             var result = _userService.AuthenticateUser("testuser", "password123");
 
-            Assert.Equal("testuser", result.UserName);
+            Assert.Equal("testuser", result);
         }
 
         [Fact]

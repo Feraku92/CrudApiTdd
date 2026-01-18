@@ -1,1 +1,70 @@
-<p>records works!</p>
+<div class="container">
+    <h3>All Pokémon</h3>
+    <table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+        <th>Pokédex</th>
+        <th>Name</th>
+        <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of pokemons">
+        <td>{{ p.pokedexId }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.type }}</td>
+        </tr>
+    </tbody>
+    </table>
+
+    <hr />
+
+    <section>
+    <h3>Find Pokémon</h3>
+    <form (submit)="searchPokemon(); $event.preventDefault()">
+        <input type="text" [(ngModel)]="searchName" name="searchName" placeholder="Name" />
+        <input type="number" [(ngModel)]="searchNumber" name="searchNumber" placeholder="Pokédex number" />
+        <button type="submit">Find</button>
+    </form>
+
+    <div *ngIf="searchError" style="color: red">{{ searchError }}</div>
+    </section>
+
+    <hr />
+
+    <section>
+    <h3>Create Pokémon</h3>
+    <form (submit)="createPokemon(); $event.preventDefault()">
+        <input type="number" [(ngModel)]="newPokedexId" name="newPokedexId" placeholder="Pokédex number" required />
+        <input type="text" [(ngModel)]="newName" name="newName" placeholder="Name" required />
+        <input type="text" [(ngModel)]="newType" name="newType" placeholder="Type" required />
+        <button type="submit">Create</button>
+    </form>
+    <div *ngIf="createMessage">{{ createMessage }}</div>
+        <div *ngIf="createError" style="color: red">{{ createError }}</div>
+    </section>
+
+    <hr />
+
+    <section>
+    <h3>Updte Pokémon</h3>
+    <form (submit)="updatePokemon(); $event.preventDefault()">
+        <input type="number" [(ngModel)]="updatePokedexId" name="updatePokedexId" placeholder="Pokédex number" />
+        <input type="text" [(ngModel)]="updateName" name="updateName" placeholder="Name" />
+        <input type="text" [(ngModel)]="updateType" name="updateType" placeholder="Type" />
+        <button type="submit">Update</button>
+    </form>
+    <div *ngIf="updateMessage">{{ updateMessage }}</div>
+        <div *ngIf="updateError" style="color: red">{{ updateError }}</div>
+    </section>
+
+    <hr />
+
+    <section>
+    <h3>Delete Pokémon</h3>
+    <input type="number" [(ngModel)]="deleteId" name="deleteId" placeholder="Pokédex number" />
+    <button (click)="deletePokemon()">Delete</button>
+    <div *ngIf="deleteMessage">{{ deleteMessage }}</div>
+        <div *ngIf="deleteError" style="color: red">{{ deleteError }}</div>
+    </section>
+</div>

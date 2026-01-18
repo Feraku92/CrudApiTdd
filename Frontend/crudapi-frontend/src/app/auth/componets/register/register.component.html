@@ -1,14 +1,18 @@
+<div class="register-container">
 <h2>Register</h2>
 
-<form (ngSubmit)="register()">
+<form (ngSubmit)="register()" class="register-form">
+<div class="form-group">
     <input
     type="text"
     [(ngModel)]="userName"
     name="userName"
-    placeholder="userName"
+    placeholder="Username"
     required
     />
+</div>
 
+<div class="form-group">
     <input
     type="text"
     [(ngModel)]="email"
@@ -16,7 +20,9 @@
     placeholder="Email"
     required
     />
+</div>
 
+<div class="form-group">
     <input
     type="password"
     [(ngModel)]="password"
@@ -24,11 +30,16 @@
     placeholder="Password"
     required
     />
+</div>
 
-    <button type="submit">Register</button>
+<button type="submit" class="register-btn">Register</button>
+
+<p *ngIf="error" class="error">{{ error }}</p>
+<p *ngIf="success" class="success">{{ success }}</p>
 </form>
 
-<p>
-    Already have an account?
-    <button (click)="login()">login</button>
+<p class="login-text">
+Already have an account?
+<button type="button" (click)="login()">Login</button>
 </p>
+</div>

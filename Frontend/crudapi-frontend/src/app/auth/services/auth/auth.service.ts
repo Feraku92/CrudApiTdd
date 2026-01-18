@@ -1,27 +1,32 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { HttpClient, HttpParams  } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import sha256 from 'crypto-js/sha256';
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
-  private readonly apiUrl = `${environment.apiUrl}/User`;
+  private readonly apiUserUrl = `${environment.apiUrl}/User`;
 
   constructor(private http: HttpClient) {}
 
   login(userName: string, password: string) {
-    console.log(this.apiUrl);
+    const hashedPassword = this.hashPassword(password);
     return this.http.post<{ token: string }>(
-      `${this.apiUrl}/login`,
-      { userName, password }
+      `${this.apiUserUrl}/login`,
+      { userName, password: hashedPassword }
     ).pipe(
       tap(response => {
         localStorage.setItem('token', response.token);
       })
     );
+  }
+
+  private hashPassword(password: string): string {
+    return sha256(password).toString();
   }
 
   saveToken(token: string): void {
@@ -39,11 +44,12 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
-  
+
   register(userName: string, email: string, password: string) {
+    const hashedPassword = this.hashPassword(password);
     return this.http.post(
-      `${this.apiUrl}/register`,
-      { userName, email, password }
+      `${this.apiUserUrl}/register`,
+      { userName, email, password: hashedPassword }
     );
   }
 

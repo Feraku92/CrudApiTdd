@@ -1,17 +1,39 @@
+using CrudApi.Api.Configurations;
 using CrudApi.Api.Infrastructure.ServiceRegistrations;
 using CrudApi.Application.Interfaces;
 using CrudApi.Application.Services;
+using CrudApi.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var jwtSecret = builder.Configuration["Jwt:Secret"];
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Mongo
 builder.Services.AddMongo(builder.Configuration.GetConnectionString("MongoDb"),"CrudApiDb");
-builder.Services.AddScoped<IUserService, UserService>();
+
+// JWT Options
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("Jwt")
+);
+
+// Services
+builder.Services.AddScoped<IUserService>(sp =>
+    new UserService(
+        sp.GetRequiredService<IUserRepository>(),
+        jwtSecret
+    )
+);
+builder.Services.AddScoped<IUserRepository, MongoUserRepository>();
+builder.Services.AddScoped<IPokemonService, PokemonService>();
+builder.Services.AddScoped<IPokemonRepsitory, MongoPokemonRepository>();
+
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular",
@@ -23,9 +45,31 @@ builder.Services.AddCors(options =>
         });
 });
 
+// JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Secret"]))
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
+
 app.UseCors("AllowAngular");
-// Configure the HTTP request pipeline.
+
+// Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -34,6 +78,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,0 +1,82 @@
+.register-container {
+  max-width: 360px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: Arial, sans-serif;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaciado automático entre inputs y botón */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.register-btn {
+  display: block;
+  margin: 0 auto;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.register-btn:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.login-text {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-text button {
+  background-color: transparent;
+  color: #007bff;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.login-text button:hover {
+  text-decoration: underline;
+}
