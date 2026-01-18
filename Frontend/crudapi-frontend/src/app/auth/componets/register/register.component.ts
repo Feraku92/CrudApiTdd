@@ -15,6 +15,8 @@ export class RegisterComponent {
   userName = '';
   email = '';
   password = '';
+  error: string = '';
+  success: string = '';
 
     constructor(
     private authService: AuthService,

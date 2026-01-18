@@ -22,7 +22,6 @@ export class LoginComponent {
   ) {}
 
   login() {
-    console.log("se logeo");
     this.authService.login(this.userName, this.password)
       .subscribe({
         next: () => this.router.navigate(['/records']),

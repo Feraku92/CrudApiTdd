@@ -20,7 +20,7 @@ namespace CrudApi.Api.Controllers
         {
             try
             {
-                var user = _userService.RegisterUser(request.UserName, request.Email, request.Password);
+                var user = _userService.RegisterUser(request);
                 return Ok(new { user.UserName, user.Email });
             }
             catch (Exception ex)
@@ -35,8 +35,8 @@ namespace CrudApi.Api.Controllers
         {
             try
             {
-                var user = _userService.AuthenticateUser(request.UserName, request.Password);
-                return Ok(new { user.UserName });
+                string token = _userService.AuthenticateUser(request.UserName, request.Password);
+                return Ok(new { token });
             }
             catch (Exception ex)
             {
