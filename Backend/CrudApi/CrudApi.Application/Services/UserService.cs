@@ -11,20 +11,20 @@ namespace CrudApi.Application.Services
             _userRepository = userRepository; 
         }
 
-        public User RegisterUser(string username, string email, string password)
+        public User RegisterUser(string userName, string email, string password)
         {
-            if (_userRepository.GetByEmail(email) != null)
+            if (_userRepository.GetByUserName(userName) != null)
                 throw new Exception("User exists");
 
-            var user = new User(username, email, password);
+            var user = new User(userName, email, password);
 
             _userRepository.Add(user);
             return user;
         }
 
-        public User AuthenticateUser(string email, string password)
+        public User AuthenticateUser(string userName, string password)
         {
-            var user = _userRepository.GetByEmail(email);
+            var user = _userRepository.GetByUserName(userName);
             if (user == null)
                 throw new UnauthorizedAccessException("User not found");
 

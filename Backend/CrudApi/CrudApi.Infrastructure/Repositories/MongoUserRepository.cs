@@ -18,9 +18,9 @@ namespace CrudApi.Infrastructure.Repositories
             _users.InsertOne(user);
         }
 
-        public User? GetByEmail(string email)
+        public User GetByUserName(string userName)
         {
-            return _users.Find(u => u.Email == email).FirstOrDefault();
+            return _users.Find(u => u.UserName == userName).FirstOrDefault();
         }
     }
 }

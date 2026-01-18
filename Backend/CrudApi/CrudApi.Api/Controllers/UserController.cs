@@ -14,7 +14,7 @@ namespace CrudApi.Api.Controllers
             _userService = userService;
         }
 
-        // POST: api/users/register
+        // POST: api/User/register
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterUserRequest request)
         {
@@ -29,14 +29,14 @@ namespace CrudApi.Api.Controllers
             }
         }
 
-        // POST: api/users/login
+        // POST: api/User/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
             try
             {
-                var user = _userService.AuthenticateUser(request.Email, request.Password);
-                return Ok(new { user.UserName, user.Email });
+                var user = _userService.AuthenticateUser(request.UserName, request.Password);
+                return Ok(new { user.UserName });
             }
             catch (Exception ex)
             {
