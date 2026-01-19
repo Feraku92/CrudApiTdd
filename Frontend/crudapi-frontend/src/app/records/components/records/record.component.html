@@ -46,13 +46,13 @@
         <button type="submit">Create</button>
     </form>
     <div *ngIf="createMessage">{{ createMessage }}</div>
-        <div *ngIf="createError" style="color: red">{{ createError }}</div>
+    <div *ngIf="createError" style="color: red">{{ createError }}</div>
     </section>
 
     <hr />
 
     <section>
-    <h3>Updte Pokémon</h3>
+    <h3>Update Pokémon</h3>
     <form (submit)="updatePokemon(); $event.preventDefault()">
         <input type="number" [(ngModel)]="updatePokedexId" name="updatePokedexId" placeholder="Pokédex number" />
         <input type="text" [(ngModel)]="updateName" name="updateName" placeholder="Name" />

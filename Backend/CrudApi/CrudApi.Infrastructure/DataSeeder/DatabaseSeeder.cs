@@ -1,6 +1,8 @@
 ﻿using CrudApi.Application.Interfaces;
 using CrudApi.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace CrudApi.Infrastructure.DataSeeder
 {
@@ -50,21 +52,21 @@ namespace CrudApi.Infrastructure.DataSeeder
             var ashUser = new User(
                 username: "trainer_ash",
                 email: "ash@pokemon.com",
-                password: BCrypt.Net.BCrypt.HashPassword("Pikachu123!")
+                password: HashPasswordForStorage("Pikachu123!")
             );
 
             // Demo User 2: Misty
             var mistyUser = new User(
                 username: "trainer_misty",
                 email: "misty@pokemon.com",
-                password: BCrypt.Net.BCrypt.HashPassword("Starmie456!")
+                password: HashPasswordForStorage("Starmie456!")
             );
 
             // Demo User 3: Brock
             var brockUser = new User(
                 username: "trainer_brock",
                 email: "brock@pokemon.com",
-                password: BCrypt.Net.BCrypt.HashPassword("Onix789!")
+                password: HashPasswordForStorage("Onix789!")
             );
 
             _userRepository.Add(ashUser);
@@ -166,6 +168,15 @@ namespace CrudApi.Infrastructure.DataSeeder
             }
 
             _logger.LogInformation($"Seeded {demoPokemons.Count} demo Pokémon successfully");
+        }
+
+        private string HashPasswordForStorage(string plainPassword)
+        {
+            using var sha256 = SHA256.Create();
+            
+            var sha256Bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(plainPassword));
+            var sha256Hash = BitConverter.ToString(sha256Bytes).Replace("-", "").ToLower();
+            return BCrypt.Net.BCrypt.HashPassword(sha256Hash);
         }
     }
 }
