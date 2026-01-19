@@ -65,6 +65,7 @@ export class RecordComponent implements OnInit {
 
   searchPokemon() {
     this.searchError = '';
+    this.foundPokemon = null;
     if (!this.searchName && !this.searchNumber) {
       this.foundPokemon = null;
       this.searchError = 'Enter name or number';
@@ -77,7 +78,7 @@ export class RecordComponent implements OnInit {
           this.foundPokemon = pokemon;
           this.searchError = '';
 
-          const ok = confirm(
+          confirm(
             `Pokémon found:\n\n` +
             `Name: ${pokemon.name}\n` +
             `Pokédex: ${pokemon.pokedexId}\n` +
@@ -85,17 +86,16 @@ export class RecordComponent implements OnInit {
           );
 
         } else {
-          console.error('else');
           this.foundPokemon = null;
           this.searchError = 'The Pokémon was not found';
         }
+        this.cd.detectChanges();
       },
-      error: () => {
-        console.error('catch');
+      error: (err) => {
         this.foundPokemon = null;
-        this.searchError = 'The Pokémon was not found';
-        console.error(this.searchError);
-        return;
+        this.searchError = err.error.message;
+        console.log(this.searchError);
+        this.cd.detectChanges();
       }
     });
   }
@@ -122,10 +122,15 @@ export class RecordComponent implements OnInit {
     this.pokemonService.createPokemon(this.newPokedexId, this.newName, this.newType).subscribe({
       next: _ => {
         this.createMessage = 'Successfully created Pokémon!';
+        this.createError = '';
         this.clearCreateForm();
         this.loadAllPokemons();
       },
-      error: _ => this.createMessage = 'Error creating Pokémon'
+      error: (err) => {
+        this.createError = err.error.error;
+        this.createMessage = '';
+        this.cd.detectChanges();
+      }
     });
   }
 
@@ -167,10 +172,15 @@ export class RecordComponent implements OnInit {
     this.pokemonService.updatePokemon(pokemonToUpdate.id, updated as Pokemon).subscribe({
       next: () => {
         this.updateMessage = 'Pokémon updated!';
+        this.updateError = '';
         this.clearUpdateForm();
         this.loadAllPokemons();
       },
-      error: () => this.updateMessage = 'Error updating Pokémon'
+      error: (err) => {
+        this.updateError = err.error.error;
+        this.updateMessage = '';
+        this.cd.detectChanges();
+      }
     });
   }
 
@@ -198,10 +208,15 @@ export class RecordComponent implements OnInit {
     this.pokemonService.deletePokemon(pokemonToDelete.id).subscribe({
       next: _ => {
         this.deleteMessage = 'Pokémon deleted!';
+        this.deleteError = '';
         this.deleteId = null;
         this.loadAllPokemons();
       },
-      error: _ => this.deleteMessage = 'Error deleting Pokémon'
+      error: (err) =>{
+          this.deleteError = err.error.error;
+          this.deleteMessage = '';
+          this.cd.detectChanges();
+      }
     });
   }
 

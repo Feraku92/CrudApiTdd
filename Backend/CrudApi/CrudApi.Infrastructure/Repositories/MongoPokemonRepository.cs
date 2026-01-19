@@ -27,7 +27,7 @@ namespace CrudApi.Infrastructure.Repositories
 
         public List<Pokemon> GetAll()
         {
-            return _pokemon.Find(_ => true).ToList();
+            return _pokemon.Find(_ => true).SortBy(x => x.PokedexId).ToList();
         }
 
         public Pokemon GetByNameOrNumber(string? name, int? number)
