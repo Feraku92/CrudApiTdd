@@ -6,6 +6,7 @@ using CrudApi.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CrudApi.Infrastructure.DataSeeder;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSecret = builder.Configuration["Jwt:Secret"];
@@ -64,9 +65,13 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
+builder.Services.AddScoped<DatabaseSeeder>();
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    await seeder.SeedAsync();
+}
 app.UseCors("AllowAngular");
 
 // Swagger
